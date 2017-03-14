@@ -816,8 +816,8 @@ namespace Mono.Options
 				c.Option     = p;
 				switch (p.OptionValueType) {
 					case OptionValueType.None:
-						c.OptionValues.Add (n);
-						c.Option.Invoke (c);
+                        c.OptionValues.Add(v);
+                        c.Option.Invoke (c);
 						break;
 					case OptionValueType.Optional:
 					case OptionValueType.Required: 

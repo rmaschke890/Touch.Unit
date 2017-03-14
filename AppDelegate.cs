@@ -19,9 +19,10 @@
 //
 
 using System.Reflection;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using MonoTouch.NUnit.UI;
+using System.Drawing;
 
 namespace MonoTouch.NUnit {
 
@@ -30,7 +31,7 @@ namespace MonoTouch.NUnit {
 	/// User Interface of the application, as well as listening (and optionally responding) to 
 	/// application events from iOS.
 	/// </summary>
-	[Register ("AppDelegate")]
+	[Foundation.Register("AppDelegate")]
 	public partial class AppDelegate : UIApplicationDelegate {
 		// class-level declarations
 		UIWindow window;
@@ -38,17 +39,17 @@ namespace MonoTouch.NUnit {
 		
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
-			window = new UIWindow (UIScreen.MainScreen.Bounds);
+			window = new UIWindow ((RectangleF)UIScreen.MainScreen.Bounds);
 			runner = new TouchRunner (window);
 
 			// tests can be inside the main assembly
 			runner.Add (Assembly.GetExecutingAssembly ());
 			// otherwise you need to ensure that the test assemblies will 
 			// become part of the app bundle
-			runner.Add (typeof (MonoTouchFixtures.Test.Test).Assembly);
-#if false
+			runner.Add (Assembly.GetExecutingAssembly());
+#if true
 			// you can use the default or set your own custom writer (e.g. save to web site and tweet it ;-)
-			runner.Writer = new TcpTextWriter ("10.0.1.2", 16384);
+			runner.Writer = new TcpTextWriter ("192.168.2.83", 8888);
 			// start running the test suites as soon as the application is loaded
 			runner.AutoStart = true;
 			// crash the application (to ensure it's ended) and return to springboard
